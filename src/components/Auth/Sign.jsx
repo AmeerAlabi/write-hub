@@ -14,74 +14,78 @@ const SignUp = () => {
   const [error, setError] = useState(""); // State for error messages
   const navigate = useNavigate();
 
- const handleSignUp = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError(""); // Reset error state
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    await updateProfile(user, { displayName: username }); // Update profile with username
-    navigate("/"); // Redirect to home or another page
-  } catch (error) {
-    setError(error.message); // Set error message to state
-  }
-  setLoading(false);
-};
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(""); // Reset error state
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: username }); // Update profile with username
+      navigate("/"); // Redirect to home or another page
+    } catch (error) {
+      setError(error.message); // Set error message to state
+    }
+    setLoading(false);
+  };
 
   return (
-    <div className="max-w-md mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-center">Sign Up - Write Hub</h2>
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>} {/* Display error messages */}
+  <div className=" w-full bg-gray-700 h-screen ">
+    <div className="max-w-md mx-auto   p-6 bg-gray-800 shadow-lg rounded-lg">
+      <h2 className="text-2xl font-bold mb-4 text-center text-white">Sign Up - Write Hub</h2>
+      {error && <p className="text-red-400 text-center mb-4">{error}</p>} {/* Display error messages */}
       <form onSubmit={handleSignUp}>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-700">Username</label>
+          <label htmlFor="username" className="block text-gray-400">Username</label>
           <input
             type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+            className="w-full p-2 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-gray-400">Email</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
+            className="w-full p-2 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:border-blue-500 transition duration-300"
             required
           />
         </div>
         <div className="mb-4 relative">
-          <label htmlFor="password" className="block text-gray-700">Password</label>
+          <label htmlFor="password" className="block text-gray-400">Password</label>
           <input
             type={showPassword ? "text" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md pr-10 focus:outline-none focus:border-blue-500 transition duration-300"
+            className="w-full p-2 border border-gray-600 bg-gray-900 text-white rounded-md pr-10 focus:outline-none focus:border-blue-500 transition duration-300"
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white transition duration-300"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
         <button
           type="submit"
-          className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 flex items-center justify-center transition duration-300"
+          className={`w-full py-2 ${
+            loading ? "bg-gray-700" : "bg-blue-600 hover:bg-blue-700"
+          } text-white font-bold rounded-md flex items-center justify-center transition duration-300`}
           disabled={loading}
         >
           {loading ? <FaSpinner className="animate-spin mr-2" /> : 'Sign Up'}
         </button>
       </form>
+    </div>
     </div>
   );
 };
