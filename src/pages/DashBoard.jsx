@@ -93,7 +93,7 @@ const Dashboard = ({ currentUser }) => {
             >
               <FaArrowLeft />
             </button>
-            <Link to="/">
+            <Link to="/home">
               <h1 className="text-2xl font-bold">Write-Hub</h1>
             </Link>
           </div>
