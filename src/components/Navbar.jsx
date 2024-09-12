@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-gray-800 shadow-lg fixed w-full top-0 z-50">
-      <Link to="/" className="text-3xl font-extrabold tracking-wide text-white">
+      <Link to="/home" className="text-3xl font-extrabold tracking-wide text-white">
         Write-Hub
       </Link>
 
@@ -27,7 +27,7 @@ const Navbar = () => {
         } lg:block absolute lg:relative top-full left-0 right-0 bg-gray-800 lg:bg-transparent px-6 lg:px-0 py-4 lg:py-0 transition-all duration-300 ease-in-out`}
       >
         <Link
-          to="/"
+          to="/home"
           className="block lg:inline-block text-gray-300 hover:text-white transition-colors duration-200"
           onClick={() => setMenuOpen(false)}
         >
@@ -40,13 +40,13 @@ const Navbar = () => {
         >
           Blog
         </Link>
-        <Link
+        {/* <Link
           to="/contact"
           className="block lg:inline-block text-gray-300 hover:text-white transition-colors duration-200"
           onClick={() => setMenuOpen(false)}
         >
           Contact
-        </Link>
+        </Link> */}
         <Link
           to="/dashboard"
           onClick={() => setMenuOpen(false)}

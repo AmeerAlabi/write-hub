@@ -98,7 +98,7 @@ const Dashboard = ({ currentUser }) => {
             </Link>
           </div>
           <nav className="space-y-6">
-            <Link to="/" className="block py-2 px-3 text-white bg-gray-700 rounded-md text-center">
+            <Link to="/home" className="block py-2 px-3 text-white bg-gray-700 rounded-md text-center">
               Posts Overview
             </Link>
             <Link to="/create" className="block px-3 py-2 text-gray-400 hover:text-white text-center">
