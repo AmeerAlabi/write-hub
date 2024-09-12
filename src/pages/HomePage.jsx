@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { motion } from 'framer-motion';
+import Navbar from '../components/Navbar';
 
 const Homepage = () => {
   const [posts, setPosts] = useState([]);
@@ -36,29 +37,16 @@ const Homepage = () => {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex flex-col justify-between">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-6 py-4 bg-gray-800 shadow-lg fixed w-full top-0 z-50">
-        <Link to="/" className="text-3xl font-extrabold tracking-wide text-white">Write-Hub</Link>
-        <div className="space-x-6">
-          <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200">Home</Link>
-          <Link to="/blog" className="text-gray-300 hover:text-white transition-colors duration-200">Blog</Link>
-          <Link to="/contact" className="text-gray-300 hover:text-white transition-colors duration-200">Contact</Link>
-          <Link to="/dashboard">
-            <button className="py-2 px-4 bg-blue-600 hover:bg-blue-700 transition-all duration-200 rounded-lg shadow-lg">Dashboard</button>
-          </Link>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
+      <Navbar />
       <section className="relative bg-cover bg-center w-full mx-auto rounded-2xl h-[600px] shadow-lg" style={{ backgroundImage: `url('https://unsplash.com/photos/a-black-and-white-photo-of-a-wall-made-up-of-squares-boA__qFJpw4')` }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black flex flex-col justify-center items-center">
-          <motion.h1 className="text-5xl font-extrabold text-white mb-4"
+        <div className="absolute p-5 inset-0 bg-gradient-to-b from-black via-transparent to-black flex flex-col justify-center items-center">
+          <motion.h1 className="text-5xl text-center  font-extrabold text-white mb-4"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}>
             Explore Ideas & Inspiration
           </motion.h1>
-          <motion.p className="text-xl mb-6"
+          <motion.p className="text-xl text-center  mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2 }}>
@@ -76,7 +64,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Latest Posts Section */}
       <section className="py-16 px-6 bg-gray-900">
         <h2 className="text-4xl font-bold mb-10 text-center text-white">Latest Posts</h2>
         {loading ? (
@@ -92,7 +79,7 @@ const Homepage = () => {
                 whileHover={{ scale: 1.05 }}>
                 <Link to={`/post/${post.id}`}>
                   <img 
-                    src={post.image || defaultImage} // Use default image if none exists
+                    src={post.imageUrl || defaultImage} 
                     alt={post.title} 
                     className="w-full h-48 object-cover" 
                   />
@@ -107,7 +94,6 @@ const Homepage = () => {
         )}
       </section>
 
-      {/* Footer */}
       <footer className="py-8 bg-black">
         <div className="text-center">
           <p className="text-gray-500">&copy; 2024 Write-Hub. All Rights Reserved.</p>

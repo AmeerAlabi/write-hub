@@ -1,4 +1,3 @@
-// src/components/SignUp.js
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/config";
@@ -11,20 +10,20 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(""); // State for error messages
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Reset error state
+    setError("");
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      await updateProfile(user, { displayName: username }); // Update profile with username
-      navigate("/"); // Redirect to home or another page
+      await updateProfile(user, { displayName: username });
+      navigate("/"); 
     } catch (error) {
-      setError(error.message); // Set error message to state
+      setError(error.message); 
     }
     setLoading(false);
   };

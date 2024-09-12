@@ -4,13 +4,14 @@ import { db } from '../firebase/config';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaThumbsUp } from 'react-icons/fa';
 import { formatDistanceToNow } from 'date-fns';
+import Navbar from '../components/Navbar';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userLikes, setUserLikes] = useState(new Set());
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate(); 
 
   const fetchPosts = async () => {
     try {
@@ -61,17 +62,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <header>
-        <nav className="flex justify-between items-center p-6 bg-gray-800 sticky top-0 shadow-lg">
-          <Link to="/" className="text-2xl font-bold">Write-Hub</Link>
-          <div className="space-x-6">
-            <Link to="/" className="text-gray-400 hover:text-white">Home</Link>
-            <Link to="/blog" className="text-gray-400 hover:text-white">Blog</Link>
-            <Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link>
-            <Link to="/dashboard">
-              <button className="py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-lg">Get Started</button>
-            </Link>
-          </div>
-        </nav>
+     <Navbar />
       </header>
       <main className="container mx-auto p-6">
         <button
@@ -80,7 +71,7 @@ const Blog = () => {
         >
           <FaArrowLeft />
         </button>
-        <h2 className="text-4xl font-bold mb-8 text-center">Welcome to the Blog</h2>
+        <h2 className="text-4xl font-bold mb-8 text-center p-[7px]">Welcome to the Blog</h2>
         {loading ? (
           <p className="text-center text-gray-400">Loading...</p>
         ) : error ? (
