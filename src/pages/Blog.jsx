@@ -11,7 +11,7 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userLikes, setUserLikes] = useState(new Set());
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const fetchPosts = async () => {
     try {
@@ -22,8 +22,15 @@ const Blog = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      postsData.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
-      setPosts(postsData);
+
+      // Sort posts by createdAt, handling cases where createdAt is undefined
+      const sortedPosts = postsData.sort((a, b) => {
+        const aCreatedAt = a.createdAt?.seconds || 0;  // Fallback to 0 if missing
+        const bCreatedAt = b.createdAt?.seconds || 0;
+        return bCreatedAt - aCreatedAt;
+      });
+
+      setPosts(sortedPosts);
     } catch (error) {
       console.error("Error fetching posts: ", error);
       setError("Failed to fetch posts.");
@@ -36,7 +43,7 @@ const Blog = () => {
     if (userLikes.has(postId)) {
       return;
     }
-    
+
     try {
       const postRef = doc(db, 'post', postId);
       const post = posts.find(post => post.id === postId);
@@ -62,7 +69,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <header>
-     <Navbar />
+        <Navbar />
       </header>
       <main className="container mx-auto p-6">
         <button
@@ -79,19 +86,18 @@ const Blog = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map(post => (
-              <Link  className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105">
-                <Link  key={post.id} to={`/post/${post.id}`}  >
-                <img 
-                  src={post.imageUrl || 'https://via.placeholder.com/600x400?text=No+Image+Available'} 
-                  alt={post.title} 
-                  className="w-full h-48 object-cover" 
-                />
+              <Link className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105">
+                <Link key={post.id} to={`/post/${post.id}`}>
+                  <img 
+                    src={post.imageUrl || 'https://via.placeholder.com/600x400?text=No+Image+Available'} 
+                    alt={post.title} 
+                    className="w-full h-48 object-cover" 
+                  />
                 </Link>
-                
                 <div className="p-4">
                   <h3 className="text-2xl font-semibold mb-2">{post.title}</h3>
                   <p className="text-gray-400 mb-4">{post.content.substring(0, 150)}...</p>
-                  <p className="text-gray-500 text-sm">By {post.author || 'Anonymous'} {formatDistanceToNow(new Date(post.createdAt.seconds * 1000), { addSuffix: true })}</p>
+                  <p className="text-gray-500 text-sm">By {post.author || 'Anonymous'} {formatDistanceToNow(new Date(post.createdAt?.seconds * 1000 || 0), { addSuffix: true })}</p>
                   <div className="flex items-center space-x-2 mt-4">
                     <button
                       onClick={() => handleLike(post.id)}
