@@ -25,23 +25,23 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen ">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl text-center font-bold text-gray-900 mb-6">Log In</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-8">
+        <h2 className="text-3xl text-center font-bold text-white mb-6">Log In</h2>
+        {error && <p className="text-red-400 text-center mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             ref={emailRef}
             placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition duration-300"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition duration-300"
             required
           />
           <input
             type="password"
             ref={passwordRef}
             placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 transition duration-300"
+            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition duration-300"
             required
           />
           <button
@@ -52,9 +52,9 @@ const Login = () => {
             {loading ? <FaSpinner className="animate-spin mr-2" /> : 'Log In'}
           </button>
         </form>
-        <p className="mt-4 text-center text-gray-700">
+        <p className="mt-4 text-center text-gray-400">
           Don't have an account?{' '}
-          <Link to='/signup' className="text-blue-600 hover:underline">
+          <Link to='/signup' className="text-blue-400 hover:underline">
             Sign Up
           </Link>
         </p>

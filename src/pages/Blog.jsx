@@ -78,7 +78,7 @@ const Blog = () => {
         >
           <FaArrowLeft />
         </button>
-        <h2 className="text-4xl font-bold mb-8 text-center p-[7px]">Welcome to the Blog</h2>
+        <h2 className="text-4xl font-bold mt-[18px] mb-8 text-center p-[7px]">Welcome to the Blog</h2>
         {loading ? (
           <p className="text-center text-gray-400">Loading...</p>
         ) : error ? (

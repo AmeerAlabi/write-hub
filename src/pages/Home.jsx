@@ -82,7 +82,7 @@ const Home = () => {
       </button>
     <div className="flex flex-col justify-center items-center text-white p-4">
 
-      <div className="w-[800px] bg-gray-700 rounded-lg shadow-md p-20 text-white">
+      <div className="lg:w-[800px] w-full bg-gray-700 rounded-lg shadow-md p-5 lg:p-20 text-white">
         <h2 className="text-2xl font-bold mb-4 text-center">Create a Post</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
