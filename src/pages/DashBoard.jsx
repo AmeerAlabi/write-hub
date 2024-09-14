@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -42,11 +42,17 @@ const Dashboard = ({ currentUser }) => {
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
+    if (!currentUser || !currentUser.email) {
+      console.warn('User is not logged in or user data is missing.');
+      return;
+    }
+
     try {
       setLoading(true);
       const postsCollection = collection(db, 'post');
-      const postsSnapshot = await getDocs(postsCollection);
-      const postsData = postsSnapshot.docs.map(doc => ({
+      const postsQuery = query(postsCollection, where('email', '==', currentUser.email));
+      const postsSnapshot = await getDocs(postsQuery);
+      const postsData = postsSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
@@ -62,7 +68,7 @@ const Dashboard = ({ currentUser }) => {
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, 'post', id));
-      setPosts(posts.filter(post => post.id !== id));
+      setPosts(posts.filter((post) => post.id !== id));
     } catch (error) {
       console.error('Error deleting post:', error);
       setError('Failed to delete post.');
@@ -71,7 +77,7 @@ const Dashboard = ({ currentUser }) => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [currentUser]);  // Re-run the effect if currentUser changes
 
   const handleLogout = async () => {
     try {
@@ -84,6 +90,7 @@ const Dashboard = ({ currentUser }) => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
+      {/* Sidebar */}
       <aside className="w-full md:w-64 bg-gray-800 p-6 flex flex-col justify-between md:h-screen">
         <div>
           <div className="flex items-center mb-10">
@@ -114,6 +121,7 @@ const Dashboard = ({ currentUser }) => {
         </button>
       </aside>
 
+      {/* Main Content */}
       <main className="flex-1 p-4 md:p-6">
         <header className="flex flex-col md:flex-row justify-between items-center mb-6">
           <h2 className="text-3xl font-semibold text-center mb-4 md:mb-0">
